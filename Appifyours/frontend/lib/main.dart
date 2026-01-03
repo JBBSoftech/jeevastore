@@ -526,7 +526,7 @@ class AdminManager {
   static Future<String?> _autoDetectAdminId() async {
     try {
       final response = await http.get(
-        Uri.parse('https://appifyours.com/api/admin/app-info'),
+        Uri.parse('http://10.239.130.5:5000/api/admin/app-info'),
         headers: {'Content-Type': 'application/json'},
       );
       
@@ -701,7 +701,7 @@ class _SignInPageState extends State<SignInPage> {
     try {
       final adminId = await AdminManager.getCurrentAdminId();
       final response = await http.post(
-        Uri.parse('https://appifyours.com/api/login'),
+        Uri.parse('http://10.239.130.5:5000/api/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': _emailController.text.trim(),
@@ -2165,7 +2165,9 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Card(
         elevation: 4,
-        color: const Color(0xFFFFFFFF),
+        color: getWidgetProperty('Catalog View Card', 'cardBackgroundColor') != null
+            ? _colorFromHex(getWidgetProperty('Catalog View Card', 'cardBackgroundColor'))
+            : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
